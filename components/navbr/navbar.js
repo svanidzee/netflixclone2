@@ -54,6 +54,7 @@ const navbar = (props) => {
             My List
           </li>
         </ul>
+
         <nav className={styles.navContainer}>
           <div>
             {/*  */}
