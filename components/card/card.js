@@ -7,7 +7,11 @@ import cls from "classnames";
 import styles from "./card.module.css";
 
 const card = (props) => {
-  const { imgUrl = "/static/cliffo.webp", size = "medium", id } = props;
+  const {
+    imgUrl = "https://images.unsplash.com/photo-1615413250263-bb04cc0a3988?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHBpeGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60",
+    size = "medium",
+    id,
+  } = props;
 
   const [src, setSrc] = useState(imgUrl);
 
