@@ -1,20 +1,43 @@
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+import { magic } from "../lib/magic-client";
+
+import Loading from "../components/loading/loading";
 import "../styles/globals.css";
-import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  // this code means, when we sign out
+  // and redirect login page and then back to home page
+  // it redirect us to login page again
+  useEffect(async () => {
+    const isLoggedIn = await magic.user.isLoggedIn();
+
+    if (isLoggedIn) {
+      router.push("/");
+    } else {
+      router.push("/login");
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleComplete = () => {
+      setIsLoading(false);
+    };
+
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+
+  return isLoading ? <Loading /> : <Component {...pageProps} />;
 }
 
 export default MyApp;
