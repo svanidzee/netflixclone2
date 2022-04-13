@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Image from "next/image";
 
 import { magic } from "../../lib/magic-client";
@@ -37,20 +36,25 @@ const navbar = (props) => {
     }
   };
 
-  const handleOnClickHome = (e) => {
+  const handleOnClickHome = useCallback((e) => {
     e.preventDefault();
     router.push("/");
-  };
+  }, []);
 
-  const handleOnClickMyList = (e) => {
+  const handleOnClickMyList = useCallback((e) => {
     e.preventDefault();
     router.push("/my-list");
-  };
+  }, []);
 
-  const handleShopDropdown = (e) => {
+  // const handleShopDropdown = (e) => {
+  //   e.preventDefault();
+  //   setShowDropdown((prev) => !prev);
+  // };
+
+  const handleShopDropdown = useCallback((e) => {
     e.preventDefault();
     setShowDropdown((prev) => !prev);
-  };
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -90,10 +94,6 @@ const navbar = (props) => {
             {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
-                  {/*  */}
-                  {/* without a tag link will not have the href attribute
-                  which hurt our seo, beacause seo demands on semantics
-                  */}
                   <a className={styles.linkName} onClick={handleSignout}>
                     Sign out
                   </a>
