@@ -12,9 +12,28 @@ const navbar = (props) => {
 
   const router = useRouter();
 
+  // db tables, and relationships between them:
+  // primary keys:
+  // A primary key is used to ensure data in the specific column is unique
+  // It uniquely identifies a record in the relational database table
+  // Only one primary key is allowed in a table
+  // It is a combination of UNIQUE and Not Null constraints
+
+  // foreign keys:
+  // A foreign key is a column or group of columns in a relational database table that provides a link between data in two tables
+  // It refers to the field in a table which is the primary key of another table
+  //
   useEffect(async () => {
     try {
-      const { email } = await magic.user.getMetadata();
+      // getMetadata functions: issuer, email, publicAdress
+      // issuer - decentralized id of the user. in server side use cases,
+      // recomended to use as the user id of your own tables
+
+      // publicAdress - publick key
+      const { email, issuer } = await magic.user.getMetadata();
+      const didToken = await magic.user.getIdToken();
+      // magic.user.getIdToken - encoded string representation of a json
+      console.log({ didToken });
       if (email) {
         setUsername(email);
       }
