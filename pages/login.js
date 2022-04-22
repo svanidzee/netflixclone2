@@ -72,7 +72,7 @@ const Login = () => {
       </Head>
       <header className={styles.header}>
         <div className={styles.headerWrapper}>
-          <Link to="/" className={styles.logoLink}>
+          <Link href="/" className={styles.logoLink}>
             <div className={styles.logoWrapper}>
               <Image
                 src={"/static/netflix.svg"}

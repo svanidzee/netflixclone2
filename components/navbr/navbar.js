@@ -61,7 +61,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Link to="/" className={styles.logoLink}>
+        <Link href="/" className={styles.logoLink}>
           <div className={styles.logoWrapper}>
             <Image
               src={"/static/netflix.svg"}
