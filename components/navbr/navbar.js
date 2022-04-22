@@ -1,25 +1,29 @@
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { magic } from "../../lib/magic-client";
 import styles from "./navbar.module.css";
 
-const navbar = () => {
+const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [username, setUsername] = useState();
 
   const router = useRouter();
 
-  useEffect(async () => {
-    try {
-      const { email } = await magic.user.getMetadata();
-      if (email) {
-        setUsername(email);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { email } = await magic.user.getMetadata();
+        if (email) {
+          setUsername(email);
+        }
+      } catch (error) {
+        console.log({ error });
       }
-    } catch (error) {
-      console.log({ error });
     }
+    fetchData();
   }, []);
 
   const handleSignout = async (e) => {
@@ -33,15 +37,21 @@ const navbar = () => {
     }
   };
 
-  const handleOnClickHome = useCallback((e) => {
-    e.preventDefault();
-    router.push("/");
-  }, []);
+  const handleOnClickHome = useCallback(
+    (e) => {
+      e.preventDefault();
+      router.push("/");
+    },
+    [router]
+  );
 
-  const handleOnClickMyList = useCallback((e) => {
-    e.preventDefault();
-    router.push("/my-list");
-  }, []);
+  const handleOnClickMyList = useCallback(
+    (e) => {
+      e.preventDefault();
+      router.push("/my-list");
+    },
+    [router]
+  );
 
   const handleShopDropdown = useCallback((e) => {
     e.preventDefault();
@@ -51,7 +61,7 @@ const navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <a className={styles.logoLink} href="/">
+        <Link to="/" className={styles.logoLink}>
           <div className={styles.logoWrapper}>
             <Image
               src={"/static/netflix.svg"}
@@ -60,7 +70,7 @@ const navbar = () => {
               height="34px"
             />
           </div>
-        </a>
+        </Link>
         <ul className={styles.navItems}>
           <li className={styles.navItem} onClick={handleOnClickHome}>
             Home
@@ -100,4 +110,4 @@ const navbar = () => {
   );
 };
 
-export default navbar;
+export default Navbar;

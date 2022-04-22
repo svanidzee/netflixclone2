@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -6,7 +7,7 @@ import { useRouter } from "next/router";
 import { magic } from "../lib/magic-client";
 import styles from "../styles/Login.module.css";
 
-const login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [userMsg, setUserMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +72,7 @@ const login = () => {
       </Head>
       <header className={styles.header}>
         <div className={styles.headerWrapper}>
-          <a className={styles.logoLink} href="/">
+          <Link to="/" className={styles.logoLink}>
             <div className={styles.logoWrapper}>
               <Image
                 src={"/static/netflix.svg"}
@@ -80,7 +81,7 @@ const login = () => {
                 height="34px"
               />
             </div>
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -105,4 +106,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

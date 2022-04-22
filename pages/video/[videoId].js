@@ -58,7 +58,7 @@ const VideoId = ({ video }) => {
           width="100%"
           height="360"
           src={`https://www.youtube.com/embed/${router.query.videoId}?autoplay=0&origin=http://example.com&controls=0&rel=1`}
-          frameborder="0"
+          frameBorder="0"
         ></iframe>
 
         <div className={styles.modalBody}>
