@@ -1,28 +1,14 @@
 import { useRouter } from "next/router";
 import Modal from "react-modal";
-
 import clsx from "classnames";
 
 import styles from "../../styles/Video.module.css";
 import { getYoutubeVideoById } from "../../lib/videos";
 import Navbar from "../../components/navbr/navbar";
 
-// modal
-// its important for users of screenreaders that other page content be hidden
-// via aria-hidden atr while the modal is open
-// to allow react modal to do this call Modal.setAppElement("#roor")
 Modal.setAppElement("#__next");
 
 export async function getStaticProps(context) {
-  // const video = {
-  //   title: "Hi cute dog",
-  //   publishTime: "2022-03-22",
-  //   description: "A big red dog that is super cute",
-  //   channelTitle: "Paramount Pictures",
-  //   viewCount: 10000,
-  // };
-  console.log({ context });
-
   const videoId = context.params.videoId;
   const videoArray = await getYoutubeVideoById(videoId);
 
@@ -38,7 +24,7 @@ export async function getStaticPaths() {
   const listOfVideos = ["mYfJxlgR2jw", "4zH5iYM4wJo", "KCPEHsAViiQ"];
 
   const paths = listOfVideos.map((videoId) => ({
-    params: { videoId }, // params value must mutch dynamic page name
+    params: { videoId },
   }));
 
   return { paths, fallback: "blocking" };
@@ -59,10 +45,9 @@ const VideoId = ({ video }) => {
     <div className={styles.container}>
       <Navbar />
       <Modal
-        isOpen={true} // defines if the modal shown or not
-        // onAfterOpen={afterOpenModal} // function that runs after modal opened
+        isOpen={true}
         contentLabel="waych the video"
-        onRequestClose={() => router.back()} // func that runs after modal closed
+        onRequestClose={() => router.back()}
         className={styles.modal}
         overlayClassName={styles.overlay}
       >
@@ -101,15 +86,3 @@ const VideoId = ({ video }) => {
 };
 
 export default VideoId;
-
-// 1.false : new paths will result in a 404 page
-
-// 2.true : new path will be statically generated (getStaticProps is called) -
-// loading state is shown while generating page(via router.isFallback and showing fallback page)
-// - page is rendered with required props after generating - new path will be cached in CDN
-// (later requests will result in cached page) - crawler Bots may index fallback page (not good for Seo)
-
-// 3."blocking" : new path will be waiting for HTML to be generated (via SSR ) - there will be no loading state
-// (no fallback page) - new path will be cached in CDN (later requests will result in cached page)
-
-// after Next.js 12 the fallback:true in ISR technique wont be showing fallback page to crawler Bots

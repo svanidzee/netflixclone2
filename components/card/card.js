@@ -3,15 +3,12 @@ import Image from "next/image";
 
 import cls from "classnames";
 import { motion } from "framer-motion";
-
 import styles from "./card.module.css";
 
 const Card = (props) => {
   const {
     imgUrl = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1340&q=80",
-
     size = "medium",
-
     id,
   } = props;
 
@@ -23,7 +20,6 @@ const Card = (props) => {
     small: styles.smItem,
   };
 
-  // set image path if we have wrong default image props
   const handleOnError = () => {
     setImgSrc(
       "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1340&q=80"
@@ -43,7 +39,6 @@ const Card = (props) => {
           alt="Card image"
           layout="fill"
           className={styles.cardImg}
-          // error event handler
           onError={handleOnError}
         />
       </motion.div>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
 import { magic } from "../lib/magic-client";
 
 import Loading from "../components/loading/loading";
@@ -10,9 +9,6 @@ function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // this code means, when we sign out
-  // and redirect login page and then back to home page
-  // it redirect us to login page again
   useEffect(async () => {
     const isLoggedIn = await magic.user.isLoggedIn();
 

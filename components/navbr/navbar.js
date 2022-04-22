@@ -3,37 +3,17 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { magic } from "../../lib/magic-client";
-
 import styles from "./navbar.module.css";
 
-const navbar = (props) => {
+const navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [username, setUsername] = useState();
 
   const router = useRouter();
 
-  // db tables, and relationships between them:
-  // primary keys:
-  // A primary key is used to ensure data in the specific column is unique
-  // It uniquely identifies a record in the relational database table
-  // Only one primary key is allowed in a table
-  // It is a combination of UNIQUE and Not Null constraints
-
-  // foreign keys:
-  // A foreign key is a column or group of columns in a relational database table that provides a link between data in two tables
-  // It refers to the field in a table which is the primary key of another table
-  //
   useEffect(async () => {
     try {
-      // getMetadata functions: issuer, email, publicAdress
-      // issuer - decentralized id of the user. in server side use cases,
-      // recomended to use as the user id of your own tables
-
-      // publicAdress - publick key
-      const { email, issuer } = await magic.user.getMetadata();
-      const didToken = await magic.user.getIdToken();
-      // magic.user.getIdToken - encoded string representation of a json
-      console.log({ didToken });
+      const { email } = await magic.user.getMetadata();
       if (email) {
         setUsername(email);
       }
@@ -44,10 +24,8 @@ const navbar = (props) => {
 
   const handleSignout = async (e) => {
     e.preventDefault();
-
     try {
       await magic.user.logout();
-      console.log(await magic.user.isLoggedIn());
       router.push("/login");
     } catch (error) {
       console.log({ error });
@@ -64,11 +42,6 @@ const navbar = (props) => {
     e.preventDefault();
     router.push("/my-list");
   }, []);
-
-  // const handleShopDropdown = (e) => {
-  //   e.preventDefault();
-  //   setShowDropdown((prev) => !prev);
-  // };
 
   const handleShopDropdown = useCallback((e) => {
     e.preventDefault();

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { magic } from "../lib/magic-client";
-
 import styles from "../styles/Login.module.css";
 
 const login = () => {
@@ -15,7 +13,6 @@ const login = () => {
 
   const router = useRouter();
 
-  // router events
   useEffect(() => {
     const handleComplete = () => {
       setIsLoading(false);
@@ -63,7 +60,7 @@ const login = () => {
       }
     } else {
       setIsLoading(false);
-      setUserMsg("Enter a valid email address"); // show user message
+      setUserMsg("Enter a valid email address");
     }
   };
 
